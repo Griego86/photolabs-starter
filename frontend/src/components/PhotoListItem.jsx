@@ -1,4 +1,4 @@
-=import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import "../styles/PhotoListItem.scss";
 import PhotoFavButton from './PhotoFavButton';
