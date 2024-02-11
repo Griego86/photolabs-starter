@@ -6,45 +6,43 @@ import PhotoFavButton from 'components/PhotoFavButton';
 import PhotoList from 'components/PhotoList';
 
 const PhotoDetailsModal = ({
-  setDisplayModal, 
-  photoSelected, 
-  favorites,
-  updateFavorites,
-  setPhotoSelected
+  state,
+  onPhotoSelect,
+  updateToFavPhotoIds,
+  onClosePhotoDetailsModal
 }) => {
-  const {id, user, urls, location, similar_photos} = photoSelected
+  const {id, user, urls, location, similar_photos} = state.photoSelected
   const photos = Object.values(similar_photos);
 
   return (
     <div className="photo-details-modal">
-      <button className="photo-details-modal__close-button" onClick={() => {setDisplayModal(false)}}>
+      <button className="photo-details-modal__close-button" onClick={onClosePhotoDetailsModal}>
         <img src={closeSymbol} alt="close symbol" />
       </button>
       
       <div className="photo-details-modal__images">
-        <PhotoFavButton favorites={favorites} updateFavorites={updateFavorites} id={id}/>
+        <PhotoFavButton favorites={state.favorites} updateToFavPhotoIds={updateToFavPhotoIds} id={id}/>
         <img src={urls.full} className="photo-details-modal__image" alt={`Large size photo by ${user.username}`}></img>
-        <div className="photo-list__user-info photo-list__user-details">
-          <img src={user.profile} className="photo-list__user-profile" alt="User's profile picture"></img>
+        <div className="photo-details-modal__photographer-info photo-details-modal__photographer-details">
+          <img src={user.profile} className="photo-details-modal__photographer-profile" alt="User's profile picture"></img>
             <div>
               {user.username}
               <br />
-              <span className="photo-list__user-location">{location.city}, {location.country}</span>
+              <span className="photo-details-modal__photographer-location">{location.city}, {location.country}</span>
             </div>
         </div>
-        
-        <div className="photo-details-modal__header">Similar Photos</div>
-
-        <div className="photo-details-modal__images">
-          <PhotoList 
-            photos={photos}
-            favorites={favorites}
-            updateFavorites={updateFavorites}
-            setDisplayModal={setDisplayModal}
-            setPhotoSelected={setPhotoSelected}
-           />
-        </div>
       </div>
+
+      <div className="photo-details-modal__images">
+        <div className="photo-details-modal__header">Similar Photos</div>
+        <PhotoList 
+          photos={photos}
+          favorites={state.favorites}
+          updateToFavPhotoIds={updateToFavPhotoIds}
+          onPhotoSelect={onPhotoSelect}
+          />
+      </div>
+      
 
     </div>
   )
