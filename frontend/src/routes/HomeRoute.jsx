@@ -1,25 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
+
+import useApplicationData from 'hooks/useApplicationData';
 import PhotoList from 'components/PhotoList';
 import TopNavigation from 'components/TopNavigationBar';
 
 import '../styles/HomeRoute.scss';
 
-const HomeRoute = ({
-  photos, 
-  topics,
-  favorites,
-  onPhotoSelect, 
-  updateToFavPhotoIds
-}) => {
+// Photos need to be defined here, as PhotoDetailsModal will use similarPhotos array
+const HomeRoute = () => {
+  const { state } = useApplicationData();
+  const photos = state.photoData;
+
   return (
     <div className="home-route">
-      <TopNavigation topics={topics} isFavPhotoExist={favorites.length}/>
-      <PhotoList 
-        photos={photos}
-        favorites={favorites}
-        updateToFavPhotoIds={updateToFavPhotoIds}
-        onPhotoSelect={onPhotoSelect}
-      />
+      <TopNavigation />
+      <PhotoList photos={photos}/>
     </div>
   );
 };
